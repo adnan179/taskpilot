@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import categoryRoutes from "./routes/category.route";
+import taskRoutes from "./routes/task.route";
 
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/categories", categoryRoutes);
+app.use("/api/tasks", taskRoutes);
 
 mongoose.connect(MONGODB_URI)
     .then(() => {
