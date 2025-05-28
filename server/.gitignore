@@ -1,2 +1,23 @@
+# Node modules
+node_modules/
+
+# Environment variables
 .env
-node_modules
+.env.*.local
+
+# Build output
+dist/
+build/
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
