@@ -1,7 +1,8 @@
-import { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, model, Document } from "mongoose";
 
 export interface CategoryDocument extends Document{
     name:string;
+    createdBy:string;
 }
 
 const CategorySchema = new Schema<CategoryDocument>(
@@ -10,6 +11,11 @@ const CategorySchema = new Schema<CategoryDocument>(
             type:String,
             required:true,
             trim:true,
+        },
+        createdBy:{
+            type: String,
+            ref:"User",
+            required:true
         }
     },
     {

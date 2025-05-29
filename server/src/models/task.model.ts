@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from "mongoose";
+import mongoose, { Schema, model, Document, Types } from "mongoose";
 
 export interface TaskDocument extends Document{
     name:string,
@@ -6,6 +6,7 @@ export interface TaskDocument extends Document{
     startDateTime: Date,
     endDateTime: Date,
     category?: Types.ObjectId;
+    createdBy: string;
 }
 
 const TaskSchema = new Schema<TaskDocument>(
@@ -30,6 +31,11 @@ const TaskSchema = new Schema<TaskDocument>(
             type: Schema.Types.ObjectId,
             ref:'Category',
         },
+        createdBy:{
+            type:String,
+            ref:'User',
+            required:true
+        }
     },
     {
         timestamps:true,

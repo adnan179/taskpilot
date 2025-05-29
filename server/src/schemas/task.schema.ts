@@ -6,6 +6,7 @@ export const TaskSchema = z.object({
     startDateTime:z.coerce.date(),
     endDateTime: z.coerce.date(),
     category: z.string().optional(),
+    createdBy:z.string().min(1,"Username is required")
 });
 
 export type TaskInput = z.infer<typeof TaskSchema>;

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { TaskSchema } from "../schemas/task.schema";
 import { TaskModel } from "../models/task.model";
-import { error } from "console";
 
 export const createTask = async(req:Request, res:Response) => {
     const parsed = TaskSchema.safeParse(req.body);
