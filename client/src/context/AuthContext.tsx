@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const loggedUser = { username: res.data.username };
     setUser(loggedUser);
     localStorage.setItem("user", JSON.stringify(loggedUser));
+    localStorage.setItem("isAuthenticated", "true"); 
   };
 
   const register = async (username: string, password: string) => {
@@ -39,12 +40,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const registeredUser = { username: res.data.username };
     setUser(registeredUser);
     localStorage.setItem("user", JSON.stringify(registeredUser));
+    localStorage.setItem("isAuthenticated", "true"); 
   };
 
   const logout = () => {
     axios.post("http://localhost:3030/api/auth/logout", {}, { withCredentials: true });
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
   };
 
   return (

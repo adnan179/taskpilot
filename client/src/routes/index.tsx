@@ -11,11 +11,11 @@ function RouteComponent() {
             <h1 className="text-[36px] font-bold text-purple-500">Welcome to TaskPilot!!</h1>
             <div className="flex gap-5">
                 <button onClick={() => navigate({to: '/login'})}
-                    className="bg-blue-400 px-4 py-2 text-white font-medium text-[20px] rounded-[16px] hover:scale-105 ease-in-out duration-300">
+                    className="bg-blue-400 px-4 py-2 text-white font-medium text-[20px] rounded-[16px] hover:scale-105 ease-in-out duration-300 focus:outline-none">
                     Login
                 </button>
                 <button onClick={() => navigate({to: '/register'})}
-                    className="bg-gray-300 px-4 py-2 font-medium text-[20px] rounded-[16px] hover:scale-105 ease-in-out duration-300">
+                    className="bg-gray-300 px-4 py-2 font-medium text-[20px] rounded-[16px] hover:scale-105 ease-in-out duration-300 focus:outline-none">
                     Register
                 </button>
             </div>

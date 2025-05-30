@@ -14,7 +14,7 @@ const LoginPage = () => {
     onSubmit: async ({ value }) => {
       try {
         await login(value.username, value.password);
-        navigate({ to: '/' });
+        navigate({ to: '/home' });
       } catch (error) {
         alert("Login failed")
         console.error('Login failed:', error);
@@ -83,11 +83,11 @@ const LoginPage = () => {
 
         <button
           type="submit"
-          className="flex px-4 py-2 bg-blue-500 text-white font-medium shadow-md rounded-lg"
+          className="flex px-4 py-2 bg-blue-500 text-[20px] text-white font-medium shadow-md rounded-lg"
         >
           Login
         </button>
-        <button className="text-blue-400 text-lg font-medium cursor-pointer" 
+        <button className="text-blue-400 text-lg font-medium cursor-pointer mt-5" 
           onClick={() => navigate({to: '/register'})}
         >
           Don't have an account?

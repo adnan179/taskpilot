@@ -6,6 +6,7 @@ import { useForm } from '@tanstack/react-form';
 const RegisterPage = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
+  
 
   const form = useForm({
     defaultValues: {
@@ -16,7 +17,7 @@ const RegisterPage = () => {
     onSubmit: async ({ value }) => {
       try {
         await register(value.username, value.password);
-        navigate({ to: '/' });
+        navigate({ to: '/home' });
       } catch (error) {
         alert("registration failed")
         console.error('Registration failed:', error);
@@ -99,8 +100,8 @@ const RegisterPage = () => {
             )}
           />
         </div>
-        <button type="submit" className="flex px-4 py-2 text-[16px] text-white font-medium bg-blue-500 shadow rounded-md">Register</button>
-        <button onClick={() => navigate({to: '/login'})} className="text-blue-400 font-medium cursor-pointer">Returning user?</button>
+        <button type="submit" className="flex px-4 py-2 text-[20px] text-white font-medium bg-blue-500 shadow rounded-md">Register</button>
+        <button onClick={() => navigate({to: '/login'})} className="mt-5 text-lg text-blue-400 font-medium cursor-pointer">Returning user?</button>
       </form>
     </section>
     
