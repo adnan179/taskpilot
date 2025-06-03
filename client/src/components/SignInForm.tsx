@@ -14,7 +14,7 @@ const SignInForm = () => {
     onSubmit: async ({ value }) => {
       try {
         await login(value.username, value.password);
-        navigate({ to: '/home' });
+        navigate({ to: '/dashboard' });
       } catch (error) {
         alert("Login failed")
         console.error('Login failed:', error);
@@ -28,7 +28,7 @@ const SignInForm = () => {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="bg-gray-50 rounded-md p-10 shadow-lg flex flex-col gap-3 justify-center items-center"
+        className="bg-gray-50 rounded-xl p-10 shadow-lg flex flex-col gap-3 justify-center items-center"
       >
         <div className="w-full">
           <form.Field
@@ -40,7 +40,7 @@ const SignInForm = () => {
                   placeholder="Username"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="p-4 sm:w-[400px] w-full rounded shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
+                  className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
                 />
                 {field.state.meta.errors?.map((error) => (
                   <p key={error} className="text-red-500 text-sm mt-1">
@@ -62,7 +62,7 @@ const SignInForm = () => {
                   placeholder="Password"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="p-4 sm:w-[400px] w-full rounded shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
+                  className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
                 />
                 {field.state.meta.errors?.map((error) => (
                   <p key={error} className="text-red-500 text-sm mt-1">

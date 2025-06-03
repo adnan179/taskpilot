@@ -11,16 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SigininImport } from './routes/siginin'
+import { Route as SigninImport } from './routes/signin'
 import { Route as RegisterImport } from './routes/register'
-import { Route as HomeImport } from './routes/home'
+import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const SigininRoute = SigininImport.update({
-  id: '/siginin',
-  path: '/siginin',
+const SigninRoute = SigninImport.update({
+  id: '/signin',
+  path: '/signin',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -30,9 +30,9 @@ const RegisterRoute = RegisterImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const HomeRoute = HomeImport.update({
-  id: '/home',
-  path: '/home',
+const DashboardRoute = DashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,11 +53,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
     '/register': {
@@ -67,11 +67,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/siginin': {
-      id: '/siginin'
-      path: '/siginin'
-      fullPath: '/siginin'
-      preLoaderRoute: typeof SigininImport
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninImport
       parentRoute: typeof rootRoute
     }
   }
@@ -81,47 +81,47 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/home': typeof HomeRoute
+  '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
-  '/siginin': typeof SigininRoute
+  '/signin': typeof SigninRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/home': typeof HomeRoute
+  '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
-  '/siginin': typeof SigininRoute
+  '/signin': typeof SigninRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/home': typeof HomeRoute
+  '/dashboard': typeof DashboardRoute
   '/register': typeof RegisterRoute
-  '/siginin': typeof SigininRoute
+  '/signin': typeof SigninRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home' | '/register' | '/siginin'
+  fullPaths: '/' | '/dashboard' | '/register' | '/signin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/register' | '/siginin'
-  id: '__root__' | '/' | '/home' | '/register' | '/siginin'
+  to: '/' | '/dashboard' | '/register' | '/signin'
+  id: '__root__' | '/' | '/dashboard' | '/register' | '/signin'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  HomeRoute: typeof HomeRoute
+  DashboardRoute: typeof DashboardRoute
   RegisterRoute: typeof RegisterRoute
-  SigininRoute: typeof SigininRoute
+  SigninRoute: typeof SigninRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  HomeRoute: HomeRoute,
+  DashboardRoute: DashboardRoute,
   RegisterRoute: RegisterRoute,
-  SigininRoute: SigininRoute,
+  SigninRoute: SigninRoute,
 }
 
 export const routeTree = rootRoute
@@ -135,22 +135,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/home",
+        "/dashboard",
         "/register",
-        "/siginin"
+        "/signin"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/home": {
-      "filePath": "home.tsx"
+    "/dashboard": {
+      "filePath": "dashboard.tsx"
     },
     "/register": {
       "filePath": "register.tsx"
     },
-    "/siginin": {
-      "filePath": "siginin.tsx"
+    "/signin": {
+      "filePath": "signin.tsx"
     }
   }
 }

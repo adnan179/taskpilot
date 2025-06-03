@@ -10,7 +10,7 @@ const ReadyToOrganize = () => {
             <div className='flex gap-5 items-center'>
                 <button onClick={() => navigate({to:"/register"})}
                     className='text-[20px] md:text-[24px] px-4 py-2 text-white font-medium bg-[#00002E] rounded-lg hover:bg-gray-800 hover:scale-105 ease-in-out duration-300'>Create a free account</button>
-                <button onClick={() => navigate({to:"/siginin"})}
+                <button onClick={() => navigate({to:"/signin"})}
                     className='text-[20px] md:text-[24px] px-4 py-2 font-medium rounded-lg border border-gray-500 bg-gray-200 hover:bg-gray-100 hover:scale-105 hover:border-gray-100 ease-in-out duration-300'>Sign In</button>
             </div>
         </div>

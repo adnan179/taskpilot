@@ -1,28 +1,38 @@
+import Navbar from '@/components/dashboard/Navbar';
 import { useAuth } from '@/context/AuthContext';
-import { useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
+import AddCategoryForm from '@/components/dashboard/AddCategoryForm';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
-    const navigate = useNavigate()
+  const { user } = useAuth();
+  const [openCategoryForm, setOpenCategoryForm] = useState<boolean>(false);
+  const [openTaskForm, setOpenTaskForm] = useState<boolean>(false);
   
-    const handleLogout = async () => {
-      try{
-        await logout();
-        navigate({to:"/"})
-      }
-      catch(error){
-        console.error('Logout failed:', error);
-      }
-    }
+    
   return (
-    <div className="w-full min-h-screen flex flex-col gap-3 justify-center items-center">
-      <h1 className="text-2xl font-bold mb-4">Welcome, {user?.username}!</h1>
-      <button 
-        onClick={handleLogout}
-        className="px-4 py-2 bg-red-500 text-white rounded focus:outline-none hover:scale-105 transition-transform ease-in-out"
-      >
-        Logout
-      </button>
+    <div className="w-full min-h-screen">
+      <Navbar  
+        handleOpenCategoryForm={() => {
+          console.log("Category form opened")
+          setOpenCategoryForm(true)
+        }} 
+        handleOpenTaskForm={() => setOpenTaskForm(true)}
+      />
+      <h1>Welcome {user?.username}</h1>
+      {openCategoryForm && (
+        <div onClick={() => setOpenCategoryForm(false)} className='fixed inset-0 z-50 bg-black/50'>
+          <div onClick={(e) => e.stopPropagation()} className='flex w-full min-h-screen justify-center items-center'>
+            <AddCategoryForm onClose = {() => setOpenCategoryForm(false)}/>
+          </div>
+        </div>
+      )}
+      {openTaskForm && (
+        <div onClick={() => setOpenTaskForm(false)} className='flex w-full min-h-screen bg-black/30'>
+          <div onClick={(e) => e.stopPropagation()} className='flex w-full min-h-screen justify-center items-center'>
+            <AddCategoryForm onClose = {() => setOpenTaskForm(false)}/>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

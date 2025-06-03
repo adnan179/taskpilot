@@ -8,7 +8,7 @@ const LogoText = () => {
     <div className='flex flex-col items-center justify-center'>
       <Logo />
       <h1 className='text-[48px] font-bold text-shadow-gray-500'>TaskPilot</h1>
-      <p className='text-[16px] text-gray-400'>{location.pathname === '/login' ? 'Welcome back! Please sign in to your account.' : 'Create your account and start organizing your tasks.'}</p>
+      <p className='text-[16px] text-gray-400'>{location.pathname === '/signin' ? 'Welcome back! Please sign in to your account.' : 'Create your account and start organizing your tasks.'}</p>
     </div>
   )
 }

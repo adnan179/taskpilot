@@ -17,7 +17,7 @@ const RegisterPage = () => {
     onSubmit: async ({ value }) => {
       try {
         await register(value.username, value.password);
-        navigate({ to: '/home' });
+        navigate({ to: '/dashboard' });
       } catch (error) {
         alert("registration failed")
         console.error('Registration failed:', error);
@@ -31,7 +31,7 @@ const RegisterPage = () => {
       const isValid = form.handleSubmit();
       if(!isValid) return;
     }}
-    className="flex flex-col gap-3 justify-center items-center p-10 bg-gray-50 rounded-md border border-gray-50 shadow"
+    className="flex flex-col gap-3 justify-center items-center p-10 bg-gray-50 rounded-xl border border-gray-50 shadow"
   >
     <div className="w-full">
       <form.Field
@@ -43,7 +43,7 @@ const RegisterPage = () => {
               placeholder="Username"
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="p-4 sm:w-[400px] w-full rounded-sm shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
+              className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
             />
             {field.state.meta.errors?.map((error) => (
               <p key={error} className="text-red-500 text-sm mt-1">
@@ -65,7 +65,7 @@ const RegisterPage = () => {
               placeholder="Password"
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="p-4 sm:w-[400px] w-full rounded-sm shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
+              className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
             />
             {field.state.meta.errors?.map((error) => (
               <p key={error} className="text-red-500 text-sm mt-1">
@@ -87,7 +87,7 @@ const RegisterPage = () => {
               placeholder="Confirm Password"
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="p-4 sm:w-[400px] w-full rounded-sm shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
+              className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
             />
             {field.state.meta.errors?.map((error) => (
               <p key={error} className="text-red-500 text-sm mt-1">
@@ -99,7 +99,7 @@ const RegisterPage = () => {
       />
     </div>
     <button type="submit" className="w-full px-4 py-2 text-[20px] text-white font-medium bg-gray-900 shadow rounded-md">Register</button>
-    <button type='button' onClick={() => navigate({to: '/siginin'})} className="mt-5 text-lg text-gray-400 font-medium cursor-pointer">
+    <button type='button' onClick={() => navigate({to: '/signin'})} className="mt-5 text-lg text-gray-400 font-medium cursor-pointer">
       Returning user? <span className="text-gray-900 font-medium">Sign In</span>
     </button>
   </form>

@@ -12,7 +12,7 @@ const Navbar = () => {
         <h1 className="text-gradient text-[24px] sm:text-[36px] font-bold">TaskPilot</h1>
       </div>
       <div className="flex gap-6 items-center">
-        <button onClick={() => navigate({ to:"/siginin"})}
+        <button onClick={() => navigate({ to:"/signin"})}
             className="text-gray-900 font-medium text-[20px] hover:scale-105 ease-in-out duration-300">
             Sign In
         </button>

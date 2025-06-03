@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
 import { AuthProvider } from './context/AuthContext';
-
+import { ToastContainer } from 'react-toastify';
 const router = createRouter({
     routeTree,
     defaultPreload: "intent",
@@ -21,6 +21,7 @@ if(!rootElement.innerHTML){
   root.render(
     <StrictMode>
       <AuthProvider>
+        <ToastContainer ariaLabel="Toast" autoClose={5000} position="top-right" />
         <RouterProvider router={router} />
       </AuthProvider>
     </StrictMode>
