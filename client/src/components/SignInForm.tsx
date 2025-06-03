@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { useForm } from '@tanstack/react-form';
 import { useNavigate } from '@tanstack/react-router';
 
-const LoginPage = () => {
+const SignInForm = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -23,16 +23,13 @@ const LoginPage = () => {
   });
 
   return (
-    <section className="flex w-full min-h-screen justify-center items-center">
-      <form
+    <form
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="bg-gray-50 rounded-[36px] p-10 shadow-lg flex flex-col gap-3 justify-center items-center"
+        className="bg-gray-50 rounded-md p-10 shadow-lg flex flex-col gap-3 justify-center items-center"
       >
-        <h2 className="text-blue-500 text-[24px] font-semibold">Login</h2>
-
         <div className="w-full">
           <form.Field
             name="username"
@@ -43,7 +40,7 @@ const LoginPage = () => {
                   placeholder="Username"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="p-4 sm:w-[350px] w-full rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="p-4 sm:w-[400px] w-full rounded shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
                 />
                 {field.state.meta.errors?.map((error) => (
                   <p key={error} className="text-red-500 text-sm mt-1">
@@ -65,7 +62,7 @@ const LoginPage = () => {
                   placeholder="Password"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="p-4 sm:w-[350px] w-full rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="p-4 sm:w-[400px] w-full rounded shadow focus:outline-none focus:ring-2 focus:ring-gray-900"
                 />
                 {field.state.meta.errors?.map((error) => (
                   <p key={error} className="text-red-500 text-sm mt-1">
@@ -83,18 +80,17 @@ const LoginPage = () => {
 
         <button
           type="submit"
-          className="flex px-4 py-2 bg-blue-500 text-[20px] text-white font-medium shadow-md rounded-lg"
+          className="w-full px-4 py-2 bg-gray-900 text-[20px] text-white font-medium shadow-md rounded-lg"
         >
-          Login
+          Sign In
         </button>
-        <button className="text-blue-400 text-lg font-medium cursor-pointer mt-5" 
+        <button type='button' className="text-gray-400 text-lg font-medium cursor-pointer mt-5" 
           onClick={() => navigate({to: '/register'})}
         >
-          Don't have an account?
+          Don't have an account? <span className='text-gray-900'>Sign Up</span>
         </button>
       </form>
-    </section>
   );
 }
 
-export default LoginPage;;
+export default SignInForm;
