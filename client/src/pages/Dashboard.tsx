@@ -1,19 +1,19 @@
-import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from '@tanstack/react-router';
 
-const Home = () => {
+const Dashboard = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate()
-
-  const handleLogout = async () => {
-    try{
-      await logout();
-      navigate({to:"/"})
+    const navigate = useNavigate()
+  
+    const handleLogout = async () => {
+      try{
+        await logout();
+        navigate({to:"/"})
+      }
+      catch(error){
+        console.error('Logout failed:', error);
+      }
     }
-    catch(error){
-      console.error('Logout failed:', error);
-    }
-  }
   return (
     <div className="w-full min-h-screen flex flex-col gap-3 justify-center items-center">
       <h1 className="text-2xl font-bold mb-4">Welcome, {user?.username}!</h1>
@@ -24,7 +24,7 @@ const Home = () => {
         Logout
       </button>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Dashboard
