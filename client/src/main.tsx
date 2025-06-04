@@ -24,7 +24,7 @@ if(!rootElement.innerHTML){
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <ToastContainer ariaLabel="Toast" autoClose={5000} position="top-right" />
+          <ToastContainer ariaLabel="Toast" autoClose={1000} position="top-right" />
           <RouterProvider router={router} />
         </AuthProvider> 
       </QueryClientProvider>

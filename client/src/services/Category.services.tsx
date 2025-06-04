@@ -13,14 +13,14 @@ export interface Category {
   updatedAt: string;
 }
 
-// Input type for the form data, now including createdBy
+// Input type for the form data
 export interface CategoryFormData {
   categoryName: string;
   categoryColor: string;
-  createdBy: string; // Added: This needs to be supplied by the component using the form
+  createdBy: string;
 }
 
-// Payload for creating a category (API expects 'name', 'color', and 'createdBy')
+// Payload for creating a category
 interface CreateCategoryPayload {
   name: string;
   color: string;
@@ -28,11 +28,10 @@ interface CreateCategoryPayload {
 }
 
 // Payload for updating a category
-// The backend schema requires 'createdBy' even for updates if the same schema is used for validation.
 interface UpdateCategoryPayload {
   name?: string;
   color?: string;
-  createdBy: string; // Assuming it must be passed even if not changing, due to schema validation
+  createdBy?: string; // it must be passed even if not changing, due to schema validation
 }
 
 // --- API Functions --- //
@@ -68,7 +67,7 @@ const deleteCategoryAPI = async (id: string): Promise<{ message: string; deleted
   return data;
 };
 
-// --- TanStack Query Hooks --- //
+//TanStack Query Hooks
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
@@ -97,7 +96,7 @@ export const useGetCategoryById = (id: string | undefined) => {
 
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
-  // The mutation function now expects an object with 'id' and 'payload'
+  
   return useMutation<Category, Error, { id: string; payload: UpdateCategoryPayload }>({
     mutationFn: updateCategoryAPI,
     onSuccess: (_data, variables) => {

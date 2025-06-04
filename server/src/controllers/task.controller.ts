@@ -40,13 +40,8 @@ export const getTaskById = async(req:Request,res:Response) => {
 }
 
 export const updateTask = async(req:Request,res:Response) => {
-    const parsed = TaskSchema.safeParse(req.body);
-    if(!parsed.success){
-        return res.status(400).json({error:parsed.error.flatten()})
-    }
-
     try{
-        const updated = await TaskModel.findByIdAndUpdate(req.params.id, parsed.data,{new: true});
+        const updated = await TaskModel.findByIdAndUpdate(req.params.id, req.body,{new: true});
         if(!updated) return res.status(404).json({error:"no task found!"});
 
         res.status(200).json(updated)

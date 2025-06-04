@@ -5,7 +5,7 @@ export interface TaskDocument extends Document{
     description?: string,
     priority:string,
     status:string,
-    dueDateTime: string,
+    dueDate: string,
     category?: string;
     createdBy: string;
 }
@@ -15,6 +15,7 @@ const TaskSchema = new Schema<TaskDocument>(
         name:{
             type:String,
             required:true,
+            unique:true,
             trim: true,
         },
         description:{
@@ -30,7 +31,7 @@ const TaskSchema = new Schema<TaskDocument>(
             enum:['todo','inprogress','done'],
             required:true
         },
-        dueDateTime:{
+        dueDate:{
             type:String,
             required:true,
         },

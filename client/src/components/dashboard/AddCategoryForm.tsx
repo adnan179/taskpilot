@@ -117,10 +117,10 @@ const AddCategoryForm = ({onClose}: AddCategoryFormProps) => {
         </button>
       </div>
       {form.state.isSubmitting && (
-          <p className="text-sm text-gray-500">Adding Category...</p>
+          <p className="text-lg text-gray-900">Adding Category...</p>
       )}
       {createCategoryMutation.isError && (
-        <p className='text-red-500 text-sm mt-2'>
+        <p className='text-red-500 text-lg mt-2'>
           Error: {createCategoryMutation.error?.message || 'Could not add category.'}
         </p>
       )}
