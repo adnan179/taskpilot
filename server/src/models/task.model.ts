@@ -3,9 +3,10 @@ import mongoose, { Schema, model, Document, Types } from "mongoose";
 export interface TaskDocument extends Document{
     name:string,
     description?: string,
-    startDateTime: Date,
-    endDateTime: Date,
-    category?: Types.ObjectId;
+    priority:string,
+    status:string,
+    dueDateTime: string,
+    category?: string;
     createdBy: string;
 }
 
@@ -19,16 +20,22 @@ const TaskSchema = new Schema<TaskDocument>(
         description:{
             type:String,
         },
-        startDateTime:{
-            type:Date,
+        priority:{
+            type:String,
+            enum:['low','medium','high'],
             required:true
         },
-        endDateTime:{
-            type:Date,
+        status:{
+            type:String,
+            enum:['todo','inprogress','done'],
+            required:true
+        },
+        dueDateTime:{
+            type:String,
             required:true,
         },
         category:{
-            type: Schema.Types.ObjectId,
+            type: String,
             ref:'Category',
         },
         createdBy:{

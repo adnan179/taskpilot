@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
 import { AuthProvider } from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const router = createRouter({
     routeTree,
     defaultPreload: "intent",
@@ -14,16 +15,19 @@ declare module '@tanstack/react-router'{
     router: typeof router
   }
 }
+const queryClient = new QueryClient();
 
 const rootElement = document.getElementById("root")!
 if(!rootElement.innerHTML){
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AuthProvider>
-        <ToastContainer ariaLabel="Toast" autoClose={5000} position="top-right" />
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <ToastContainer ariaLabel="Toast" autoClose={5000} position="top-right" />
+          <RouterProvider router={router} />
+        </AuthProvider> 
+      </QueryClientProvider>
     </StrictMode>
   )
 }

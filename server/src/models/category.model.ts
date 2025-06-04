@@ -1,7 +1,8 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
 export interface CategoryDocument extends Document{
     name:string;
+    color:string;
     createdBy:string;
 }
 
@@ -11,6 +12,10 @@ const CategorySchema = new Schema<CategoryDocument>(
             type:String,
             required:true,
             trim:true,
+        },
+        color:{
+            type:String,
+            required:true,
         },
         createdBy:{
             type: String,

@@ -2,6 +2,7 @@ import Navbar from '@/components/dashboard/Navbar';
 import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
 import AddCategoryForm from '@/components/dashboard/AddCategoryForm';
+import AddTaskForm from '@/components/dashboard/AddTaskForm';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -27,9 +28,9 @@ const Dashboard = () => {
         </div>
       )}
       {openTaskForm && (
-        <div onClick={() => setOpenTaskForm(false)} className='flex w-full min-h-screen bg-black/30'>
+        <div onClick={() => setOpenTaskForm(false)} className='fixed inset-0 z-50 bg-black/50'>
           <div onClick={(e) => e.stopPropagation()} className='flex w-full min-h-screen justify-center items-center'>
-            <AddCategoryForm onClose = {() => setOpenTaskForm(false)}/>
+            <AddTaskForm onClose = {() => setOpenTaskForm(false)}/>
           </div>
         </div>
       )}

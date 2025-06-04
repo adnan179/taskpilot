@@ -1,20 +1,51 @@
-import { useForm } from '@tanstack/react-form'
-import axios from 'axios'
+import { useForm } from '@tanstack/react-form';
 import { CloseIcon } from '@/assets/Svgs'
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useAuth } from '@/context/AuthContext';
+import { useCreateCategory, type CategoryFormData } from '@/services/Category.services';
 
-const AddCategoryForm = ({onClose}: {onClose: () => void}) => {
+
+const colors = [
+  { name: 'Light Red', hexCode: '#FFCCCB' },
+  { name: 'Light Blue', hexCode: '#ADD8E6' },
+  { name: 'Light Green', hexCode: '#90EE90' },
+  { name: 'Pink', hexCode: '#FFC0CB' },
+  { name: 'Orange', hexCode: '#FFA500' },
+  { name: 'Purple', hexCode: '#E6E6FA' },
+  { name: 'Teal', hexCode: '#AFEEEE' }, 
+];
+
+interface AddCategoryFormProps{
+  onClose: () => void;
+}
+
+const AddCategoryForm = ({onClose}: AddCategoryFormProps) => {
+  const [selectedColor, setSelectedColor] = useState<string>(colors[0].hexCode);
+  const {user} = useAuth();
+  const createCategoryMutation = useCreateCategory();
+
   const form = useForm({
     defaultValues:{
       categoryName:"",
-      categoryColor:""
+      categoryColor:"",
+      createdBy:user?.username
     },
     onSubmit: async ({ value }) => {
-      try{
-        const response = await axios.post("http://localhost:3030/api/category");
-        
+      if(!value.createdBy){
+        toast.error("Cannot create category: User identifier is missing!")
       }
-      catch(error){
-        console.log("Error adding a new category", error)
+      const submissionData:CategoryFormData ={
+        ...value,
+        categoryColor:selectedColor, 
+      };
+      try{
+        await createCategoryMutation.mutateAsync(submissionData);
+        toast.success(`${value.categoryName} created successfully`);
+        onClose()
+      }catch(error){
+        console.log("Error adding a new category:",error);
+        toast.error(error instanceof Error ? error.message:"Failed to add category")
       }
     }
   })
@@ -23,7 +54,9 @@ const AddCategoryForm = ({onClose}: {onClose: () => void}) => {
       e.preventDefault();
       form.handleSubmit();
     }}
-    className='relative bg-gray-50 rounded-xl p-10 shadow-md flex flex-col gap-3 justify-center items-center'>
+    className='relative bg-gray-50 rounded-xl p-10 shadow-md flex flex-col gap-3 '>
+      <h2 className='text-2xl font-bold'>Add New Category</h2>
+      <p className='text-gray-400 text-lg mb-4'>Create a new category to organize your tasks.</p>
       <div onClick={onClose} className='absolute top-4 right-4 cursor-pointer'>
         <CloseIcon />
       </div>
@@ -41,7 +74,7 @@ const AddCategoryForm = ({onClose}: {onClose: () => void}) => {
               />
               {field.state.meta.errors?.map((error) => (
                 <p key={error} className='text-red-500 text-sm mt-1'>
-                  {error}
+                  {error} 
                 </p>
               ))}
             </div>
@@ -54,13 +87,21 @@ const AddCategoryForm = ({onClose}: {onClose: () => void}) => {
           name='categoryColor'
           children={(field) => (
             <div className='mb-4'>
-              <input 
-                type='text' 
-                placeholder='Category Color'
-                value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
-                className='p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'
-              />
+              <label className='block text-sm font-medium text-gray-700 mb-1'>Category Color</label>
+              <div className='flex flex-wrap gap-2'>
+                {colors.map((color) => (
+                  <div
+                    key={color.name}
+                    onClick={() => {
+                      field.handleChange(color.hexCode);
+                      setSelectedColor(color.hexCode);
+                    }}
+                    className={`w-8 h-8 rounded-full cursor-pointer border-2 ${selectedColor === color.hexCode ? 'border-gray-900 ring-1 ring-gray-900' : 'border-transparent'}`}
+                    style={{ backgroundColor: color.hexCode }}
+                    title={color.name}
+                  />
+                ))}
+              </div>
               {field.state.meta.errors?.map((error) => (
                 <p key={error} className='text-red-500 text-sm mt-1'>
                   {error}
@@ -70,12 +111,19 @@ const AddCategoryForm = ({onClose}: {onClose: () => void}) => {
           )}
         />
       </div>
-      <button type='submit' className=' justify-end flex px-4 py-2 bg-gray-900 text-[20px] text-white font-medium shadow-md rounded-lg'>
-        Add Category
-      </button>
+      <div className='flex justify-end'>
+        <button type='submit' className='w-[180px] px-4 py-2 bg-[#00002E] text-[20px] text-white font-medium shadow-md rounded-lg cursor-pointer hover:bg-gray-800 hover:shadow-lg hover:scale-105 transition-all duration-300'>
+          Add Category
+        </button>
+      </div>
       {form.state.isSubmitting && (
           <p className="text-sm text-gray-500">Adding Category...</p>
-        )}
+      )}
+      {createCategoryMutation.isError && (
+        <p className='text-red-500 text-sm mt-2'>
+          Error: {createCategoryMutation.error?.message || 'Could not add category.'}
+        </p>
+      )}
     </form>
   )
 }
