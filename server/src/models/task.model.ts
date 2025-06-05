@@ -5,7 +5,7 @@ export interface TaskDocument extends Document{
     description?: string,
     priority:string,
     status:string,
-    dueDate: string,
+    dueDate?: string,
     category?: string;
     createdBy: string;
 }
@@ -33,7 +33,6 @@ const TaskSchema = new Schema<TaskDocument>(
         },
         dueDate:{
             type:String,
-            required:true,
         },
         category:{
             type: String,

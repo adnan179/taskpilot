@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/context/AuthContext';
 import { useCreateCategory, type CategoryFormData } from '@/services/Category.services';
+import { categorySchema } from '@/schemas/category.schema';
 
 
 const colors = [
@@ -30,6 +31,9 @@ const AddCategoryForm = ({onClose}: AddCategoryFormProps) => {
       categoryName:"",
       categoryColor:"",
       createdBy:user?.username
+    },
+    validators:{
+      onSubmit: categorySchema,
     },
     onSubmit: async ({ value }) => {
       if(!value.createdBy){
@@ -72,9 +76,9 @@ const AddCategoryForm = ({onClose}: AddCategoryFormProps) => {
                 onChange={(e) => field.handleChange(e.target.value)}
                 className='p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'
               />
-              {field.state.meta.errors?.map((error) => (
-                <p key={error} className='text-red-500 text-sm mt-1'>
-                  {error} 
+              {field.state.meta.errors?.map((error,idx) => (
+                <p key={idx} className='text-red-500 text-sm mt-1'>
+                  {error?.message} 
                 </p>
               ))}
             </div>
@@ -102,9 +106,9 @@ const AddCategoryForm = ({onClose}: AddCategoryFormProps) => {
                   />
                 ))}
               </div>
-              {field.state.meta.errors?.map((error) => (
-                <p key={error} className='text-red-500 text-sm mt-1'>
-                  {error}
+              {field.state.meta.errors?.map((error,idx) => (
+                <p key={idx} className='text-red-500 text-sm mt-1'>
+                  {error?.message}
                 </p>
               ))}
             </div>

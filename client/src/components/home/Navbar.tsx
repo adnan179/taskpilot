@@ -13,11 +13,11 @@ const Navbar = () => {
       </div>
       <div className="flex gap-6 items-center">
         <button onClick={() => navigate({ to:"/signin"})}
-            className="text-gray-900 font-medium text-[20px] hover:scale-105 ease-in-out duration-300">
+            className="text-gray-900 font-medium text-[20px] hover:scale-105 ease-in-out duration-300 cursor-pointer">
             Sign In
         </button>
         <button onClick={() => navigate({ to:"/register"})}
-            className="bg-gray-900 text-white font-medium px-4 py-2 text-[20px] rounded-md shadow hover:scale-105 ease-in-out duration-300">
+            className="bg-gray-900 text-white font-medium px-4 py-2 text-[20px] rounded-md shadow hover:scale-105 ease-in-out duration-300 cursor-pointer">
             Get Started
         </button>
       </div>

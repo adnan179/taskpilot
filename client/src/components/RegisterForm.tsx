@@ -1,6 +1,8 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from '../context/AuthContext';
 import { useForm } from '@tanstack/react-form';
+import { registerSchema } from "../schemas/registerSchema";
+import { toast } from 'react-toastify';
 
 
 const RegisterPage = () => {
@@ -14,12 +16,16 @@ const RegisterPage = () => {
       password: "",
       confirmPassword: "",
     },
+    validators: {
+      onSubmit:registerSchema,
+    },
     onSubmit: async ({ value }) => {
       try {
         await register(value.username, value.password);
+        toast.success(`${value.username} is registered successfully!`)
         navigate({ to: '/dashboard' });
       } catch (error) {
-        alert("registration failed")
+        toast.error("registration failed")
         console.error('Registration failed:', error);
       }
     },
@@ -39,15 +45,16 @@ const RegisterPage = () => {
         children={(field) => (
           <div className="mb-4">
             <input
+              name="username"
               type="text"
               placeholder="Username"
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
             />
-            {field.state.meta.errors?.map((error) => (
-              <p key={error} className="text-red-500 text-sm mt-1">
-                {error}
+            {field.state.meta.errors?.map((error,idx) => (
+              <p key={idx} className="text-red-500 text-sm mt-1">
+                {error?.message}
               </p>
             ))}
           </div>
@@ -67,9 +74,9 @@ const RegisterPage = () => {
               onChange={(e) => field.handleChange(e.target.value)}
               className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
             />
-            {field.state.meta.errors?.map((error) => (
-              <p key={error} className="text-red-500 text-sm mt-1">
-                {error}
+            {field.state.meta.errors?.map((error,idx) => (
+              <p key={idx} className="text-red-500 text-sm mt-1">
+                {error?.message}
               </p>
             ))}
           </div>
@@ -89,16 +96,16 @@ const RegisterPage = () => {
               onChange={(e) => field.handleChange(e.target.value)}
               className="p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900"
             />
-            {field.state.meta.errors?.map((error) => (
-              <p key={error} className="text-red-500 text-sm mt-1">
-                {error}
+            {field.state.meta.errors?.map((error,idx) => (
+              <p key={idx} className="text-red-500 text-sm mt-1">
+                {error?.message}
               </p>
             ))}
           </div>
         )}
       />
     </div>
-    <button type="submit" className="w-full px-4 py-2 text-[20px] text-white font-medium bg-gray-900 shadow rounded-md">Register</button>
+    <button type="submit" className="w-full px-4 py-2 text-[20px] text-white font-medium bg-gray-900 shadow rounded-md cursor-pointer">Register</button>
     <button type='button' onClick={() => navigate({to: '/signin'})} className="mt-5 text-lg text-gray-400 font-medium cursor-pointer">
       Returning user? <span className="text-gray-900 font-medium">Sign In</span>
     </button>

@@ -5,6 +5,7 @@ import { TaskModel } from "../models/task.model";
 export const createTask = async(req:Request, res:Response) => {
     const parsed = TaskSchema.safeParse(req.body);
     if(!parsed.success){
+        console.log(parsed.error.flatten());
         return res.status(400).json({error:parsed.error.flatten()});
     }
 
@@ -13,14 +14,15 @@ export const createTask = async(req:Request, res:Response) => {
         await task.save();
         res.status(200).json(task)
     }catch(err:any){
+        console.log(err);
         res.status(500).json({error:`Failed to create task:${err.message}`})
     }
 };
 
 
-export const getTasks = async(_req:Request, res:Response) => {
+export const getTasks = async(req:Request, res:Response) => {
     try{
-        const tasks = await TaskModel.find().sort({ createdAt:-1});
+        const tasks = await TaskModel.find({createdBy:req.params.username}).sort({ createdAt:-1});
         if(!tasks) return res.status(404).json({error:"no tasks found!"})
         res.status(200).json(tasks);
     }catch(err:any){

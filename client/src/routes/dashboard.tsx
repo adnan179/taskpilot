@@ -8,7 +8,7 @@ export const Route = createFileRoute('/dashboard')({
       throw redirect({
         to: '/signin',
         search: {
-          redirect: '/dashboard', // optional: to go back to home after login
+          redirect: '/dashboard',
         },
       });
     }

@@ -1,5 +1,6 @@
 import { CloseIcon } from "@/assets/Svgs";
 import { useAuth } from "@/context/AuthContext";
+import { taskSchema } from "@/schemas/task.schema";
 import { useGetCategories } from "@/services/Category.services";
 import { useCreateTask, useUpdateTask, type Task, type TaskFormData, type TaskPriority, type TaskStatus } from "@/services/Task.services";
 import { useForm } from "@tanstack/react-form";
@@ -28,9 +29,12 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
             description:"",
             priority:"low",
             status:"todo",
-            dueDate: new Date().toISOString().split('T')[0],
+            dueDate: "",
             category:"",
             createdBy:user?.username
+        },
+        validators:{
+            onSubmit: taskSchema,
         },
         onSubmit: async({ value }) => {
             if(!value.createdBy){
@@ -39,7 +43,6 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
             }
             const submissionData: TaskFormData = {
                 ...value,
-                dueDate: value.dueDate.toString(),
             }
 
             try{
@@ -71,6 +74,7 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
         }
     });
 
+    //getting form data for the edit mode
     useEffect(() => {
         if(isEditMode && taskToEdit){
             form.reset({
@@ -78,8 +82,8 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                 description: taskToEdit.description || "",
                 priority: taskToEdit.priority,
                 status: taskToEdit.status,
-                dueDate: taskToEdit.dueDate,
-                category: taskToEdit.category || " ",
+                dueDate: taskToEdit.dueDate?.split('T')[0] || "",
+                category: taskToEdit.category || "",
                 createdBy: taskToEdit.createdBy 
             })
         }else{
@@ -88,7 +92,7 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                 description: "",
                 priority: "low",
                 status: "todo",
-                dueDate: new Date().toISOString().split('T')[0],
+                dueDate: "",
                 category: "",
                 createdBy: user?.username || ""
             })
@@ -110,9 +114,6 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
       <div className="w-[400px]">
         <form.Field 
             name="taskName"
-            validators={{
-                onChange:({ value }) => (!value ? "Task name is required" : undefined)
-            }}
             children={(field) => (
                 <div className="mb-4">
                     <label htmlFor={field.name} className='block text-sm font-medium text-gray-700 mb-1'>
@@ -126,9 +127,11 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                         onChange={(e) => field.handleChange(e.target.value)}
                         className='p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'
                     />
-                    {field.state.meta.errors && (
-                        <p className='text-red-500 text-xs mt-1'>{field.state.meta.errors.join(', ')}</p>
-                    )}
+                    {field.state.meta.errors?.map((error,idx) => (
+                        <p key={idx} className='text-red-500 text-sm mt-1'>
+                            {error?.message}
+                        </p>
+                    ))}
                 </div>
             )}
         />
@@ -164,16 +167,16 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
             children={(field) => (
                 <div className="mb-4">
                     <label htmlFor={field.name} className='block text-sm font-medium text-gray-700 mb-1'>Description (optional)</label>
-                    <textarea 
+                    <textarea rows={3} 
                         placeholder="Description"
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className='p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'
                     />
-                    {field.state.meta.errors?.map((error) => (
-                        <p key={error} className='text-red-500 text-sm mt-1'>
-                            {error}
+                    {field.state.meta.errors?.map((error,idx) => (
+                        <p key={idx} className='text-red-500 text-sm mt-1'>
+                            {error?.message}
                         </p>
                     ))}
                 </div>
@@ -189,7 +192,7 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                     children={(field) => (
                         <div className="mb-4">
                             <label htmlFor={field.name} className='block text-sm font-medium text-gray-700 mb-1'>Priority</label>
-                            <select title="Priority"
+                            <select title="priority"
                                 value={field.state.value}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className='p-4 w-[200px] rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'
@@ -199,9 +202,9 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                                     <option key={priority} value={priority}>{priority}</option>
                                 ))}
                             </select>
-                            {field.state.meta.errors?.map((error) => (
-                                <p key={error} className='text-red-500 text-sm mt-1'>
-                                    {error}
+                            {field.state.meta.errors?.map((error,idx) => (
+                                <p key={idx} className='text-red-500 text-sm mt-1'>
+                                    {error?.message}
                                 </p>
                             ))}
                         </div>
@@ -213,9 +216,6 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
             <div className="flex w-1/2">
                 <form.Field 
                     name="status"
-                    validators={{
-                        onChange: ({ value }) => (!value ? "Status is required" : undefined)
-                    }}
                     children={(field) => (
                         <div className="mb-4">
                             <label htmlFor={field.name} className='block text-sm font-medium text-gray-700 mb-1'>Status*</label>
@@ -229,9 +229,9 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                                     <option key={status} value={status}>{status}</option>
                                 ))}
                             </select>
-                            {field.state.meta.errors?.map((error) => (
-                                <p key={error} className='text-red-500 text-sm mt-1'>
-                                    {error}
+                            {field.state.meta.errors?.map((error,idx) => (
+                                <p key={idx} className='text-red-500 text-sm mt-1'>
+                                    {error?.message}
                                 </p>
                             ))}
                         </div>
@@ -245,22 +245,19 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
       <div className="w-[400px]">
         <form.Field 
             name="dueDate"
-            validators={{
-                onChange: ({ value }) => (!value ? "Due date is required" : undefined)
-            }}
             children={(field) => (
                 <div className="mb-4">
                     <label htmlFor={field.name} className='block text-sm font-medium text-gray-700 mb-1'>Due Date*</label>
-                    <input title="Due Date"
+                    <input title="dueDate"
                         type="date"
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className='p-4 sm:w-[400px] w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'
                     />
-                    {field.state.meta.errors?.map((error) => (
-                        <p key={error} className='text-red-500 text-sm mt-1'>
-                            {error}
+                    {field.state.meta.errors?.map((error,idx) => (
+                        <p key={idx} className='text-red-500 text-sm mt-1'>
+                            {error.message}
                         </p>
                     ))}
                 </div>
@@ -270,7 +267,7 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
        {/* task due date input */}
        <div className="flex justify-end">
         <button type='submit' className='w-[180px] px-4 py-2 bg-[#00002E] text-[20px] text-white font-medium shadow-md rounded-lg cursor-pointer hover:bg-gray-800 hover:shadow-lg hover:scale-105 transition-all duration-300'>
-            {isEditMode ? "Update Task" : "Add Task"}
+            {isEditMode ? "Update Task" : "Create Task"}
         </button>
        </div>
        {form.state.isSubmitting && (

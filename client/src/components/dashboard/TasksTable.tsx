@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-table';
 import { useDeleteTask, useGetTasks, useUpdateTask, type Task, type TaskPriority, type TaskStatus } from '@/services/Task.services';
 import { toast } from 'react-toastify';
+import { useAuth } from '@/context/AuthContext';
 
 const taskStatuses: TaskStatus[] = ["todo","in-progress","completed"];
 
@@ -15,7 +16,8 @@ interface TaskTableProps{
 }
 
 const TasksTable = ({ onEditTask} : TaskTableProps) => {
-  const { data: tasks, isLoading, error } = useGetTasks();
+  const { user } = useAuth();
+  const { data: tasks, isLoading, error } = useGetTasks(user?.username);
   const updateMutation = useUpdateTask();
   const deleteMutation = useDeleteTask();
 
@@ -23,8 +25,6 @@ const TasksTable = ({ onEditTask} : TaskTableProps) => {
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
   const [taskNameToDelete, setTaskNameToDelete] = useState<string | null>(null);
-
-
 
   const handleStatusChange = async(taskId:string, newStatus: TaskStatus) => {
     try{
