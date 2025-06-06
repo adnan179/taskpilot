@@ -19,9 +19,9 @@ export const createCategory = async (req: Request, res: Response) => {
 };
 
 //function to get categories
-export const getCategories = async(_req:Request, res:Response) => {
+export const getCategories = async(req:Request, res:Response) => {
     try{
-        const categories = await CategoryModel.find().sort({createdAt:-1});
+        const categories = await CategoryModel.find({createdBy:req.params.username}).sort({createdAt:-1});
         res.status(200).json(categories)
     }catch(err:any){
         res.status(500).json({error:`Failed to fetch categories:${err.message}`})

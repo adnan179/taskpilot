@@ -46,8 +46,8 @@ const createCategoryAPI = async (formData: CategoryFormData): Promise<Category> 
   return data;
 };
 
-const getCategoriesAPI = async (): Promise<Category[]> => {
-  const { data } = await axios.get<Category[]>(API_BASE_URL);
+const getCategoriesAPI = async (username:string| undefined): Promise<Category[]> => {
+  const { data } = await axios.get<Category[]>(`${API_BASE_URL}/${username}`);
   return data;
 };
 
@@ -79,10 +79,10 @@ export const useCreateCategory = () => {
   });
 };
 
-export const useGetCategories = () => {
+export const useGetCategories = (username:string|undefined) => {
   return useQuery<Category[], Error>({
-    queryKey: ['categories'],
-    queryFn: getCategoriesAPI,
+    queryKey: ['categories',username],
+    queryFn: () => getCategoriesAPI(username!),
   });
 };
 

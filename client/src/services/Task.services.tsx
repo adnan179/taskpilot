@@ -69,7 +69,7 @@ const createTaskAPI = async (formData:TaskFormData):Promise<Task> => {
     return data;
 }
 
-const getTasksAPI = async(username:string):Promise<Task[]> => {
+const getTasksAPI = async(username:string | undefined):Promise<Task[]> => {
     const { data } = await axios.get<Task[]>(`${API_BASE_URL}/${username}`);
     return data;
 }
@@ -101,7 +101,7 @@ export const useCreateTask = () =>{
     });
 }
 
-export const useGetTasks = (username:string) => {
+export const useGetTasks = (username:string | undefined) => {
     return useQuery<Task[],Error>({
         queryKey:['tasks',username],
         queryFn:() => getTasksAPI(username),

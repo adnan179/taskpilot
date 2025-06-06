@@ -5,19 +5,19 @@ import {
   flexRender,
   type ColumnDef,
 } from '@tanstack/react-table';
-import { useDeleteTask, useGetTasks, useUpdateTask, type Task, type TaskPriority, type TaskStatus } from '@/services/Task.services';
+import { useDeleteTask, useUpdateTask, type Task, type TaskPriority, type TaskStatus } from '@/services/Task.services';
 import { toast } from 'react-toastify';
-import { useAuth } from '@/context/AuthContext';
 
 const taskStatuses: TaskStatus[] = ["todo","in-progress","completed"];
 
 interface TaskTableProps{
     onEditTask: (task: Task) => void,
+    tasks: Task[] | undefined,
+    isLoading: boolean,
+    error: Error | null,
 }
 
-const TasksTable = ({ onEditTask} : TaskTableProps) => {
-  const { user } = useAuth();
-  const { data: tasks, isLoading, error } = useGetTasks(user?.username);
+const TasksTable = ({ onEditTask, tasks, isLoading, error} : TaskTableProps) => {
   const updateMutation = useUpdateTask();
   const deleteMutation = useDeleteTask();
 
@@ -65,6 +65,7 @@ const TasksTable = ({ onEditTask} : TaskTableProps) => {
     setTaskToDelete(null);
   }
 
+  //defining the columns for the table
   const columns = useMemo<ColumnDef<Task>[]>(() => [
     {
       accessorKey: 'name',
