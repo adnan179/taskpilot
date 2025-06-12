@@ -3,8 +3,9 @@ import { CloseIcon } from '@/assets/Svgs'
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '@/context/AuthContext';
-import { useCreateCategory, type CategoryFormData } from '@/services/Category.services';
-import { categorySchema } from '@/schemas/category.schema';
+import { useCreateCategory } from '@/domains/dashboard/services/Category.services';
+import { type CategoryFormData } from '../types/categories.types';
+import { categorySchema } from '@/domains/dashboard/schemas/category.schema';
 
 
 const colors = [

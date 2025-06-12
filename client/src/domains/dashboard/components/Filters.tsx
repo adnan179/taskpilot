@@ -1,6 +1,6 @@
 import { FilterIcon, SearchIcon } from '@/assets/Svgs';
 import { useAuth } from '@/context/AuthContext';
-import { useGetCategories } from '@/services/Category.services';
+import { useGetCategories } from '@/domains/dashboard/services/Category.services';
 import React from 'react'
 
 export type TaskFilters = {
@@ -86,8 +86,9 @@ const Filters = ({filters, setFilters}:Props) => {
         {/* priority filter */}
         
 
+
     </div>
   )
 }
 
-export default Filters
+export default Filters;

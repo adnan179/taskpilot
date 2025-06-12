@@ -1,38 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import type { Category, CategoryFormData, CreateCategoryPayload, UpdateCategoryPayload } from '../types/categories.types';
 
 const API_BASE_URL = 'http://localhost:3030/api/categories';
 
-// Types
-export interface Category {
-  _id: string;
-  name: string;
-  color: string;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
-// Input type for the form data
-export interface CategoryFormData {
-  categoryName: string;
-  categoryColor: string;
-  createdBy: string;
-}
-
-// Payload for creating a category
-interface CreateCategoryPayload {
-  name: string;
-  color: string;
-  createdBy: string;
-}
-
-// Payload for updating a category
-interface UpdateCategoryPayload {
-  name?: string;
-  color?: string;
-  createdBy?: string; // it must be passed even if not changing, due to schema validation
-}
 
 // --- API Functions --- //
 

@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { useForm } from '@tanstack/react-form';
-import { registerSchema } from "../schemas/registerSchema";
+import { registerSchema } from "@/domains/register/schemas/registerSchema";
 import { toast } from 'react-toastify';
 
 

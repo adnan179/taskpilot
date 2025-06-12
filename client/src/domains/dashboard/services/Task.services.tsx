@@ -1,57 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import type { createTaskPayload, Task, TaskFormData, UpdateTaskPayload } from "../types/tasks.types";
 
 const API_BASE_URL = 'http://localhost:3030/api/tasks';
-
-//types
-
-export type TaskPriority = "low" | "medium" | "high";
-export type TaskStatus = "todo" | "in-progress" | "completed";
-
-export interface Task{
-    _id:string;
-    name:string;
-    description?:string;
-    priority:TaskPriority;
-    status:TaskStatus;
-    dueDate:string;
-    category?:string;
-    createdBy:string;
-}
-
-//input type for the form data
-export interface TaskFormData{
-    taskName:string;
-    description?:string;
-    priority:TaskPriority;
-    status:TaskStatus;
-    dueDate:string;
-    category?:string;
-    createdBy:string;
-}
-
-//payload for creating a task
-interface createTaskPayload{
-    name:string;
-    description?:string;
-    priority:TaskPriority;
-    status:TaskStatus;
-    dueDate:string;
-    category?:string;
-    createdBy:string;
-}
-
-//payload for updating a task
-interface UpdateTaskPayload{
-    name?:string;
-    description?:string;
-    priority?:TaskPriority;
-    status?:TaskStatus;
-    dueDate?:string;
-    category?:string;
-    createdBy?:string;
-}
-//types
 
 
 //Api functions

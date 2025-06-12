@@ -1,5 +1,5 @@
-import { signinSchema } from '@/schemas/signinSchema';
-import { useAuth } from '../context/AuthContext';
+import { signinSchema } from '@/domains/siginin/schemas/signinSchema';
+import { useAuth } from '@/context/AuthContext';
 import { useForm } from '@tanstack/react-form';
 import { useNavigate } from '@tanstack/react-router';
 import { toast } from 'react-toastify';

@@ -1,5 +1,5 @@
-import LogoText from "../components/LogoText";
-import SignInForm from '@/components/SignInForm';
+import LogoText from "@/components/LogoText";
+import SignInForm from '@/domains/siginin/components/SignInForm';
 
 const SignInPage = () => {
   return (

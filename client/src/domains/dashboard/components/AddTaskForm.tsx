@@ -1,8 +1,9 @@
 import { CloseIcon } from "@/assets/Svgs";
 import { useAuth } from "@/context/AuthContext";
-import { taskSchema } from "@/schemas/task.schema";
-import { useGetCategories } from "@/services/Category.services";
-import { useCreateTask, useUpdateTask, type Task, type TaskFormData, type TaskPriority, type TaskStatus } from "@/services/Task.services";
+import { taskSchema } from "@/domains/dashboard/schemas/task.schema";
+import { useGetCategories } from "@/domains/dashboard/services/Category.services";
+import { useCreateTask, useUpdateTask } from "@/domains/dashboard/services/Task.services";
+import { type Task, type TaskPriority, type TaskStatus, type TaskFormData } from "../types/tasks.types";
 import { useForm } from "@tanstack/react-form";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -17,7 +18,7 @@ const taskStatus: TaskStatus[] = ["todo","in-progress","completed"];
 
 const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
     const { user } = useAuth();
-    const { data: categories } = useGetCategories();
+    const { data: categories } = useGetCategories(user?.username);
     const createTaskMutation = useCreateTask();
     const updateTaskMutation = useUpdateTask();
 
@@ -149,7 +150,7 @@ const AddTaskForm = ({onClose, taskToEdit}: AddTaskFormProps) => {
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className='p-4 w-full rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900'>
-                            <option value="">Select Category (optional)</option>
+                            <option value="">Select Category</option>
                             {categories?.map((cat) => (
                                 <option key={cat._id} value={cat.name}>{cat.name}</option>
                             ))}

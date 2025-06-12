@@ -5,7 +5,7 @@ import {
   flexRender,
   type ColumnDef,
 } from '@tanstack/react-table';
-import { useDeleteTask, useUpdateTask, type Task, type TaskPriority, type TaskStatus } from '@/services/Task.services';
+import { useDeleteTask, useUpdateTask, type Task, type TaskPriority, type TaskStatus } from '@/domains/dashboard/services/Task.services';
 import { toast } from 'react-toastify';
 
 const taskStatuses: TaskStatus[] = ["todo","in-progress","completed"];

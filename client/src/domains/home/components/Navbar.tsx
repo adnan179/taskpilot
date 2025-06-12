@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router"
-import { Logo } from "../../assets/Svgs";
+import { Logo } from "@/assets/Svgs";
 
 
 const Navbar = () => {

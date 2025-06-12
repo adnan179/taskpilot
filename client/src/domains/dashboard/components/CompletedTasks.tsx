@@ -14,4 +14,4 @@ const CompletedTasks = ({completedTasks}: {completedTasks: number}) => {
   )
 }
 
-export default CompletedTasks
+export default CompletedTasks;

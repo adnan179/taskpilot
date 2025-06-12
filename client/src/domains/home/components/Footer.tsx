@@ -1,4 +1,4 @@
-import { Logo } from '../../assets/Svgs';
+import { Logo } from '@/assets/Svgs';
 
 const Footer = () => {
   return (

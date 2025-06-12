@@ -1,14 +1,15 @@
-import Navbar from '@/components/dashboard/Navbar';
+import Navbar from '@/domains/dashboard/components/Navbar';
 import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
-import AddCategoryForm from '@/components/dashboard/AddCategoryForm';
-import AddTaskForm from '@/components/dashboard/AddTaskForm';
-import TasksTable from '@/components/dashboard/TasksTable';
-import { useGetTasks, type Task } from '@/services/Task.services';
-import TotalTasks from '@/components/dashboard/TotalTasks';
-import CompletedTasks from '@/components/dashboard/CompletedTasks';
-import CompletionProgress from '@/components/dashboard/CompletionProgress';
-import Filters, { type TaskFilters } from '@/components/dashboard/Filters';
+import AddCategoryForm from '@/domains/dashboard/components/AddCategoryForm';
+import AddTaskForm from '@/domains/dashboard/components/AddTaskForm';
+import TasksTable from '@/domains/dashboard/components/TasksTable';
+import { useGetTasks } from '@/domains/dashboard/services/Task.services';
+import { type Task } from "@/domains/dashboard/types/tasks.types";
+import TotalTasks from '@/domains/dashboard/components/TotalTasks';
+import CompletedTasks from '@/domains/dashboard/components/CompletedTasks';
+import CompletionProgress from '@/domains/dashboard/components/CompletionProgress';
+import Filters, { type TaskFilters } from '@/domains/dashboard/components/Filters';
 
 const Dashboard = () => {
   const { user } = useAuth();
