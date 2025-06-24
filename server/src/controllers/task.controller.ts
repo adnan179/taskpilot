@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { TaskSchema } from "../schemas/task.schema";
 import { TaskModel } from "../models/task.model";
 
+//func to create task
 export const createTask = async(req:Request, res:Response) => {
     const parsed = TaskSchema.safeParse(req.body);
     if(!parsed.success){
@@ -19,7 +20,7 @@ export const createTask = async(req:Request, res:Response) => {
     }
 };
 
-
+//func to get tasks
 export const getTasks = async(req:Request, res:Response) => {
     try{
         const tasks = await TaskModel.find({createdBy:req.params.username}).sort({ createdAt:-1});
@@ -30,6 +31,8 @@ export const getTasks = async(req:Request, res:Response) => {
     }
 };
 
+
+//func to get task by using id
 export const getTaskById = async(req:Request,res:Response) => {
     try{
         const task = await TaskModel.findById(req.params.id);
@@ -41,6 +44,7 @@ export const getTaskById = async(req:Request,res:Response) => {
     }
 }
 
+//func to update the task by using id
 export const updateTask = async(req:Request,res:Response) => {
     try{
         const updated = await TaskModel.findByIdAndUpdate(req.params.id, req.body,{new: true});
@@ -52,6 +56,7 @@ export const updateTask = async(req:Request,res:Response) => {
     }
 }
 
+//func to delete task using id
 export const deleteTask = async(req:Request, res: Response) => {
     try{
         const deleted = await TaskModel.findByIdAndDelete(req.params.id);

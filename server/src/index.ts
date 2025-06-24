@@ -5,6 +5,7 @@ import cors from "cors";
 import categoryRoutes from "./routes/category.route";
 import taskRoutes from "./routes/task.route";
 import authRoutes from "./routes/auth.route";
+import budgetRoutes from "./routes/budget.route"
 import cookieParser from "cookie-parser";
 
 
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use("/api/categories", categoryRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/budget", budgetRoutes);
 
 mongoose.connect(MONGODB_URI)
     .then(() => {

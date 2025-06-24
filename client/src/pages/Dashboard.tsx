@@ -17,7 +17,7 @@ const Dashboard = () => {
   const [openTaskForm, setOpenTaskForm] = useState<boolean>(false);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
   const [filters,setFilters] = useState<TaskFilters>({
-    search:"",
+    search:"", 
     status:"",
     priority:"",
     category:"",
